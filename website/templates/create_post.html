@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% block title %}Post{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container mt-5 pt-5">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-md-5 m-auto">
+                <div class="bx card border-0 shadow-l">
+                    <div class="card-body col-12">
+                        <svg class="col-12 mx-auto my-3" xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#3EB750" class="bi bi-postcard-heart" viewBox="0 0 16 16">
+                            <path d="M8 4.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7Zm3.5.878c1.482-1.42 4.795 1.392 0 4.622-4.795-3.23-1.482-6.043 0-4.622ZM2.5 5a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Z"/>
+                            <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H2Z"/>
+                        </svg>   
+                        <h1 align="center">Create a Post</h1>                       
+                        <form method="POST"  class="pt-2">
+                            <input type="text" class="form-control my-4 py-2" name="title" id="title" placeholder="Post Title">
+                            <textarea name="text" id="text" cols="10" rows="10" class="form-control" placeholder="Write the post"></textarea>
+                            <div class="text-center pt-4">
+                                <button class="bt btn col-2" type="submit">Post</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
