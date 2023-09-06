@@ -1,3 +1,105 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
-{% block content %}{% endblock %}
+{% block content %}
+{% for post in posts %}
+<div class="container">
+    <div class="text-center my-5">
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            <div class="card bx mb-5 shadow-sm">
+                <div class="card-header d-flex justify-content-left align-items-center">
+                    <svg class="col-1" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="green" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                      </svg>  
+                    <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
+                    {% if user.id == post.author %}
+                        <div class="div btn-group">
+                            <button type="button" class="btn btn-sm dropdown-toggle bt align-items-center mg" data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                
+                </div>
+                
+                <div class="card-body">
+                    <div class="brd">
+                        <div class="card-title text-center">
+                            <h2>{{post.title}}</h2>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="card-text">
+                            <p>{{post.text}}</p>
+                        </div>
+                    </div>
+                    <div class="collapse" id="comment-{{post.id}}">
+                        <div class="card">
+                            <div class="card-body" id="comment-expanded-{{post.id}}">
+                                {% for comment in post.comments %}
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a href="/posts/{{comment.user.username}}">{{comment.user.username}}</a>: {{comment.text}}
+                                    </div>
+                                    <div>
+                                        <small class="text-muted">
+                                            {{comment.date_created}}
+                                        </small>
+                                        {% if user.id == comment.author or user.id == post.author %}
+                                        <div class="div btn-group">
+                                            <button type="button" class="btn btn-sm dropdown-toggle bt align-items-center mg" data-bs-toggle="dropdown"></button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="/delete-comment/{{comment.id}}" class="dropdown-item">Delete</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <p class="card-text">
+                    {% if post.comments|length > 0 %}
+                    <a data-bs-toggle="collapse" href="#comment-{{post.id}}" role="button">
+                        <button class="cps">View {{post.comments|length}} Comments</button>
+                    </a>
+                    {% else %}
+                    <small class="text-muted">No Comments</small>
+                    {% endif%}
+                    </p>
+                    <form class="mrg input-group mb-3" action="/create-comment/{{post.id}}" method="POST">
+                        <input type="text" id="text" name="text" class="form-control" placeholder="Comment!"/>
+                        <button type="submit" class="btn bt">Comment</button>
+                    </form>
+                    <span id="likes-count-{{post.id}}" style="color:#3EB750;">{{ post.likes|length }}</span>
+                    {% if user.id in post.likes|map(attribute="author")|list %}
+                        <a href="/like-post/{{post.id}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" id="like-button-{{post.id}}" style="margin-left: 5px;" width="20" height="20" fill="#3EB750" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                            </svg>
+                        </a>
+                    {% else %}
+                        <a href="/like-post/{{post.id}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" id="like-button-{{post.id}}" style="margin-left: 5px;" width="20" height="20" fill="#3EB750" class="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+
+                    
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+{% endfor %}
+{% endblock %}

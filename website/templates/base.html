@@ -45,7 +45,7 @@
                       <li>
                           <a class="dropdown-item" href="/create-post">Create Post!</a>
                       </li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><a class="dropdown-item" href="/posts/{{current_user.username}}">My Posts</a></li>
                       <li><hr class="dropdown-divider" /></li>
                       <li>
                           <a class="dropdown-item" href="/logout">Log Out</a>
@@ -67,7 +67,7 @@
             
           </ul>
           {% if user.is_authenticated %}
-          <form class="d-flex" role="search">
+          <form class="d-flex" role="search" method="GET">
             <input
               class="form-control me-2"
               type="search"
